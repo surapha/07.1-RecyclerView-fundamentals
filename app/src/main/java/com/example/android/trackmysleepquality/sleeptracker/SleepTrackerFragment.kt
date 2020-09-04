@@ -61,7 +61,7 @@ class SleepTrackerFragment : Fragment() {
         val dataSource = SleepDatabase.getInstance(application).sleepDatabaseDao
         val viewModelFactory = SleepTrackerViewModelFactory(dataSource, application)
 
-        val adapter = SleepNightAdapter()
+
 
         // Get a reference to the ViewModel associated with this fragment.
         val sleepTrackerViewModel =
@@ -110,7 +110,15 @@ class SleepTrackerFragment : Fragment() {
             }
         })
         return binding.root
+
+        val adapter = SleepNightAdapter()
         binding.sleepList.adapter = adapter
+
+        sleepTrackerViewModel.nights.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.data = it
+            }
+        })
 
     }
 }
